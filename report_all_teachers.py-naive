@@ -1,0 +1,73 @@
+#!/usr/bin/python
+
+import MySQLdb as mdb, sys, cgi
+import jrm_NESRAT_utils as jrm
+
+jrm.print_header()
+
+form = cgi.FieldStorage()
+gradeid = form.getvalue("grade")
+
+try:
+    connection = jrm.connect()
+    student_cursor = connection.cursor()
+    class_cursor = connection.cursor()
+    cursor = connection.cursor()
+except mdb.Error, e:
+    print "Error %d: %s" % (e.args[0], e.args[1])
+    sys.exit(1)
+
+
+try:
+    classes_q = "select id, teacherid from classes where gradeid = " + gradeid
+    cursor.execute(classes_q)
+    classes = cursor.fetchall()
+except mdb.Error as e:
+    print "Error in query: %s" % classes_q
+    sys.exit(1)
+
+try:
+    grade_q = "select grade from grades where id = " + gradeid
+    cursor.execute(grade_q)
+    grade = cursor.fetchone()
+except mdb.Error as e:
+    print "Error in query: %s" % grade_q
+    sys.exit(1)
+
+total_time = 0
+# iterate over all classes in the grade...
+for classroom in classes: 
+
+    # number of minutes a class's teacher read to it
+    try:
+        class_reading_q = "select sum(num_mins)*(select count(*) "
+        class_reading_q +=                     "from students s, classes c "
+        class_reading_q +=                     "where s.classid = c.id and c.id = %d) " % classroom[0]
+        class_reading_q += "from classreading where classid = %d" % classroom[0]
+        class_cursor.execute(class_reading_q)
+        class_reading = class_cursor.fetchone()
+    except mdb.Error as e:
+        print "Error in query: %s" % class_reading_q
+        sys.exit(1)
+
+    total_time += class_reading[0]
+
+
+    # ...and get the number of minutes read by the individual students in that class...
+    try:
+        student_reading_q = "select sum(num_mins) from reading where studentid in "
+        student_reading_q = "(select id from students where classid = %d)" % classroom[0]
+        student_cursor.execute(student_reading_q)
+        student_reading = student_cursor.fetchone()
+    except mdb.Error as e:
+        print "Error in query: %s" % student_reading_q
+        sys.exit(1)
+
+    total_time += student_reading[0]
+
+    
+print "Total reading time for %s: %d" % (grade[0], total_time) 
+
+print "</table>\n"
+
+jrm.print_footer()
