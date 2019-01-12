@@ -3,8 +3,7 @@ import MySQLdb as mdb, sys
 ## Connect to the Readathon database
 def connect():
     try:
-
-        con = mdb.connect ('localhost', 'navigaz2_nesread', 'readingrocks2015', 'navigaz2_readathon2015')
+        con = mdb.connect ('localhost', 'nes_read', 'passwordgoeshere', 'readathon')
 #        curs = con.cursor()
 
 
@@ -23,7 +22,7 @@ def print_header():
 
 ## print the footer, found at the bottom of each page
 def print_footer():
-    print "<h5>Built by Jonathan Miller, July 2015</h5>"
+    print "<h5>Built by Jonathan Miller, July 2015; updated Jan 2017; updated Jan 2019</h5>"
     print "</body></html>"
 
 
@@ -32,18 +31,16 @@ def print_footer():
 def date_select():
     date_list = ""
     date_list += "<option value='' selected>Choose a date..."
-    date_list += "<option value='2016-01-20'>Jan 20, 2016"
-    date_list += "<option value='2016-01-21'>Jan 21, 2016"
-    date_list += "<option value='2016-01-22'>Jan 22, 2016"
-    date_list += "<option value='2016-01-23'>Jan 23, 2016"
-    date_list += "<option value='2016-01-24'>Jan 24, 2016"
-    date_list += "<option value='2016-01-25'>Jan 25, 2016"
-    date_list += "<option value='2016-01-26'>Jan 26, 2016"
-    date_list += "<option value='2016-01-27'>Jan 27, 2016"
-    date_list += "<option value='2016-01-28'>Jan 28, 2016"
-    date_list += "<option value='2016-01-29'>Jan 29, 2016"
-    date_list += "<option value='2016-01-30'>Jan 30, 2016"
-    date_list += "<option value='2016-01-31'>Jan 31, 2016"
+    date_list += "<option value='2017-02-03'>Feb 3, 2017"
+    date_list += "<option value='2017-02-04'>Feb 4, 2017"
+    date_list += "<option value='2017-02-05'>Feb 5, 2017"
+    date_list += "<option value='2017-02-06'>Feb 6, 2017"
+    date_list += "<option value='2017-02-07'>Feb 7, 2017"
+    date_list += "<option value='2017-02-08'>Feb 8, 2017"
+    date_list += "<option value='2017-02-09'>Feb 9, 2017"
+    date_list += "<option value='2017-02-10'>Feb 10, 2017"
+    date_list += "<option value='2017-02-11'>Feb 11, 2017"
+    date_list += "<option value='2017-02-12'>Feb 12, 2017"
     return date_list
 
 ## a couple functions to make hour and minute drop-downs; 
