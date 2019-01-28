@@ -12,7 +12,7 @@ try:
     connection = jrm.connect()
     cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+" "+e.args[1])
     sys.exit(1)
 
 
@@ -21,7 +21,7 @@ try:
     cursor.execute(grade_q)
     grades = cursor.fetchall()
 except mdb.Error as e:
-    print "Error in query: %s" % grade_q
+    print_error("Error with "+grade_q)
     sys.exit(1)
 
 total_time = 0
@@ -39,7 +39,7 @@ for gradeid in grades:
         cursor.execute(minutes_q)
         minutes = cursor.fetchone()
     except mdb.Error as e:
-        print "Error in query: %s" % minutes_q
+        print_error("Error with "+minutes_q)
         sys.exit(1)
 
     if minutes[0] != None:

@@ -11,7 +11,7 @@ try:
     connection = jrm.connect()
     cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+" "+e.args[1])
     sys.exit(1)
 
 #ins_studid = str(form.getvalue("insert_studid"))
@@ -28,7 +28,7 @@ try:
     cursor.execute(pwd_query)
     passres = cursor.fetchall()
 except mdb.Error as res_e:
-    print "Error in query: %s" % pwd_query
+    print_error("Error with "+pwd_query)
     sys.exit(1)
 
 for passwd in passres:
@@ -37,7 +37,7 @@ for passwd in passres:
         sys.exit(1)
         
 
-upd_query = "update classreading set num_mins = '%s' where id = '%s'" % (upd_mins, upd_readid)
+#upd_query = "update classreading set num_mins = '%s' where id = '%s'" % (upd_mins, upd_readid)
 
 print "query is %s " % upd_query
 try: 
@@ -49,7 +49,7 @@ try:
         print "There was a problem."
 
 except mdb.Error as e:
-    print "Error in query: %s" % upd_query
+    print_error("Error with "+upd_query)
     sys.exit(1)
 
 

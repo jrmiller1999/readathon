@@ -13,7 +13,7 @@ try:
     student_cursor = connection.cursor()
     class_cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+" "+e.args[1])
     sys.exit(1)
 
 try:
@@ -31,7 +31,7 @@ try:
     student_cursor.execute(student_reading_q)
     student_times = student_cursor.fetchall()
 except mdb.Error as e:
-    print "Error in query: %s" % student_reading_q
+    print_error("Error with "+student_reading_q)
     sys.exit(1)
 
 try:
@@ -43,7 +43,7 @@ try:
     class_times = class_cursor.fetchall()
 
 except mdb.Error as e:
-    print "Error in query: %s" % class_reading_q
+    print_error("Error with "+class_reading_q)
     sys.exit(1)
 
 try:
@@ -51,7 +51,7 @@ try:
     class_cursor.execute(teacher_q)
     teacher = class_cursor.fetchone()
 except mdb.Error as e:
-    print "Error in query: %s" % teacher_q
+    print_error("Error with "+teacher_q)
     sys.exit(1)
 
 try:
@@ -63,7 +63,7 @@ try:
     class_cursor.execute(student_count_q)
     student_count = class_cursor.fetchone()
 except mdb.Error as e:
-    print "Error in query: %s" % student_count_q
+    print_error("Error with "+student_count_q)
     sys.exit(1)
 
 num_students = student_count[0]

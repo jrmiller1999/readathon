@@ -14,7 +14,7 @@ try:
     connection = jrm.connect()
     cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+": "+e.args[1])
     sys.exit(1)
 
 
@@ -26,7 +26,7 @@ try:
     #print form.getvalue("grade")
     teachers = cursor.fetchall()
 except mdb.Error as e:
-    print "Error in query: %s" % query
+    print_error("Error with "+upd_query)
     sys.exit(1)
 
 print "Choose your teacher:"

@@ -12,7 +12,7 @@ try:
     connection = jrm.connect()
     cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+" "+e.args[1])
     sys.exit(1)
 
 
@@ -21,7 +21,7 @@ try:
     cursor.execute(grade_q)
     grade = cursor.fetchone()
 except mdb.Error as e:
-    print "Error in query: %s" % grade_q
+    print_error("Error with "+grade_q)
     sys.exit(1)
 
 try: 
@@ -29,7 +29,7 @@ try:
     cursor.execute(classes_q)
     classes = cursor.fetchall()
 except mdb.Error as e:
-    print "Error in query: %s" % classes_q
+    print_error("Error with "+classes_q)
     sys.exit(1)
 
 try: 
@@ -47,7 +47,7 @@ try:
     cursor.execute(minutes_q)
     minutes = cursor.fetchone()
 except mdb.Error as e:
-    print "Error in query: %s" % minutes_q
+    print_error("Error with "+minutes_q)
     sys.exit(1)
 
 total_min = minutes[0]
@@ -58,7 +58,7 @@ for myclass in classes:
         cursor.execute(numstudents_q)
         numstudents = cursor.fetchone()
     except mdb.Error as e:
-        print "Error in query: %s" % grade_q
+        print_error("Error with "+grade_q)
         sys.exit(1)
 
     try:
@@ -66,7 +66,7 @@ for myclass in classes:
         cursor.execute(classreading_q)
         classreading = cursor.fetchone()
     except mdb.Error as e:
-        print "Error in query: %s" % grade_q
+        print_error("Error with "+grade_q)
         sys.exit(1)
 
 #    print myclass[0]

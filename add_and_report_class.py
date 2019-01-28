@@ -11,7 +11,7 @@ try:
     connection = jrm.connect()
     cursor = connection.cursor()
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print_error(str(e.args[0])+" "+e.args[1])
     sys.exit(1)
 
 ins_classid = str(form.getvalue("insert_classid"))
@@ -28,7 +28,7 @@ try:
         print "There was a problem."
 
 except mdb.Error as e:
-    print "Error in query: %s" % ins_query
+    print_error("Error with "+ins_query)
     sys.exit(1)
 
 

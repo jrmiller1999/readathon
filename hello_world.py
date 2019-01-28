@@ -14,6 +14,6 @@ try:
     print "there are %s grades at NES." % result.fetch_row()[0]
 
 except mdb.Error, e:
-    print "Error %d: %s" % (e.args[0], e.args[1])
+    print "Error %d: %s" % (str(e.args[0]), e.args[1])
     sys.exit(1)
 
